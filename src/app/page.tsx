@@ -1,79 +1,78 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 
-export default function AuthPage() {
-  const router = useRouter();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  async function signUp() {
-    const { error } = await supabase.auth.signUp({
-      email: email.trim(),
-      password,
-    });
-
-    if (error) {
-      alert(error.message);
-    } else {
-      alert("Signup successful! Check your email to verify your account.");
-    }
-  }
-
-  async function signIn() {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
-      password,
-    });
-
-    if (error) {
-      alert(error.message);
-    } else {
-      alert("Login successful!");
-      router.push("/dashboard");
-    }
-  }
-
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 p-6">
-      <div className="w-full max-w-md rounded-2xl bg-slate-900 p-8 shadow-lg">
-        <h1 className="mb-6 text-center text-3xl font-bold text-white">
-          FinWise AI Login
+    <div className="min-h-screen bg-slate-950 text-white">
+      {/* Hero Section */}
+      <section className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
+        <h1 className="mb-6 text-6xl font-bold text-blue-400">
+          FinWise AI
         </h1>
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="mb-4 w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-blue-500"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <p className="mb-8 max-w-2xl text-xl text-gray-300">
+          AI Powered Personal Finance Advisor built with Next.js,
+          Supabase and real-time market data.
+        </p>
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="mb-6 w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-blue-500"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="flex gap-4">
+          <Link
+            href="/login"
+            className="rounded-lg bg-blue-600 px-8 py-4 text-lg font-semibold hover:bg-blue-700"
+          >
+            Get Started
+          </Link>
 
-        <button
-          onClick={signUp}
-          className="mb-3 w-full rounded-lg bg-blue-600 p-3 text-white hover:bg-blue-700"
-        >
-          Sign Up
-        </button>
+          <Link
+            href="/dashboard"
+            className="rounded-lg border border-blue-500 px-8 py-4 text-lg font-semibold hover:bg-slate-900"
+          >
+            View Demo
+          </Link>
+        </div>
+      </section>
 
-        <button
-          onClick={signIn}
-          className="w-full rounded-lg bg-green-600 p-3 text-white hover:bg-green-700"
-        >
-          Login
-        </button>
-      </div>
+      {/* Features */}
+      <section className="px-8 py-20">
+        <h2 className="mb-12 text-center text-4xl font-bold">
+          Features
+        </h2>
+
+        <div className="grid gap-8 md:grid-cols-3">
+          <div className="rounded-xl bg-slate-900 p-8">
+            <h3 className="mb-4 text-2xl font-bold">
+              📈 Live Market Data
+            </h3>
+            <p className="text-gray-400">
+              Track real-time stock prices and market trends.
+            </p>
+          </div>
+
+          <div className="rounded-xl bg-slate-900 p-8">
+            <h3 className="mb-4 text-2xl font-bold">
+              🤖 AI Assistant
+            </h3>
+            <p className="text-gray-400">
+              Ask investment and finance related questions.
+            </p>
+          </div>
+
+          <div className="rounded-xl bg-slate-900 p-8">
+            <h3 className="mb-4 text-2xl font-bold">
+              💼 Portfolio Tracking
+            </h3>
+            <p className="text-gray-400">
+              Monitor investments and portfolio performance.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800 py-10 text-center text-gray-500">
+        © 2026 FinWise AI • Built with Next.js & Supabase
+      </footer>
     </div>
   );
 }
